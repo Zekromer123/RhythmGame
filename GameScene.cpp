@@ -12,7 +12,7 @@ void GameScene::Initialize() {
 
 	rhythmManager = new RhythmManager();
 	rhythmManager->Initialize();
-	soundHandle_ = Audio::GetInstance()->LoadWave("60bpm.wav");
+	soundHandle_ = Audio::GetInstance()->LoadWave("kick_snare.mp3");
 }
 
 void GameScene::Update() {
@@ -21,25 +21,24 @@ void GameScene::Update() {
 	camera.matProjection = Mathematics::MakeOrthographicMatrix(0.0f, 0.0f, 1280.0f, 720.0f, 0.0f, 100.0f);
 	camera.TransferMatrix();
 
-	if (audioPlayTimer > 0) {
-		audioPlayTimer--;
-		countdown = audioPlayTimer / 60;
-	}
-
 	if (!isFinished) {
 		float deltaTime = 1.0f / 60.0f;
-		rhythmManager->Update(deltaTime);
-		if (!isPlaying && countdown <= 0) {
-			isPlaying = true;
-			rhythmManager->StartSong(soundHandle_);
-		}
+		if (startCountdown > 0.0f) {
+			startCountdown -= deltaTime;
+		} else {
+			rhythmManager->Update(deltaTime);
+			if (!isPlaying && rhythmManager->GetSongTimer() >= 0.0f) {
+				isPlaying = true;
+				rhythmManager->StartSong(soundHandle_);
+			}
 
-		if (rhythmManager->GetSongTimer() >= 4.0f) {
-			rhythmManager->StopSong(soundHandle_);
-		}
-		if (rhythmManager->GetSongTimer() >= 6.0f) {
-			isPlaying = false;
-			isFinished = true;
+			if (rhythmManager->GetSongTimer() >= 4.0f) {
+				rhythmManager->StopSong(soundHandle_);
+			}
+			if (rhythmManager->GetSongTimer() >= 6.0f) {
+				isPlaying = false;
+				isFinished = true;
+			}
 		}
 	}
 }
@@ -55,9 +54,10 @@ void GameScene::Draw() {
 	Sprite::PreDraw();
 
 	DebugText::GetInstance()->DrawAll();
-	if (audioPlayTimer > 0) {
+	if (startCountdown > 0) {
 		DebugText::GetInstance()->SetPos(600.0f, 360.0f);
-		DebugText::GetInstance()->Printf("%d", countdown);
+		int displayTime = (int)startCountdown;
+		DebugText::GetInstance()->Printf("%", displayTime);
 	}
 	Sprite::PostDraw();
 }

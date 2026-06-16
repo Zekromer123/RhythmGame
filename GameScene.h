@@ -15,8 +15,7 @@ private:
 	KamataEngine::Camera camera{};
 	RhythmManager* rhythmManager = nullptr;
 	uint32_t soundHandle_ = 0;
-	int audioPlayTimer = 180;
+	float startCountdown = 5.0f;
 	bool isPlaying = false;
 	bool isFinished = false;
-	int countdown = 0;
 };

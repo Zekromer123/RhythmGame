@@ -33,7 +33,7 @@ private:
 
 	//float kAudioOffset = -0.5f;
 	float songTimer_ = 0.0f;
-	float bpm_ = 60.0f;
+	float bpm_ = 120.0f;
 	float beatInterval_ = 0.0f;
 
 	float travelTime_ = 2.0f;
