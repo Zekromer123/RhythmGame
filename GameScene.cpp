@@ -12,7 +12,7 @@ void GameScene::Initialize() {
 
 	rhythmManager = new RhythmManager();
 	rhythmManager->Initialize();
-	soundHandle_ = Audio::GetInstance()->LoadWave("kick_snare.mp3");
+	soundHandle_ = Audio::GetInstance()->LoadWave("kick_snare.mp3");//今の音楽の長さは4秒
 }
 
 void GameScene::Update() {
@@ -31,10 +31,11 @@ void GameScene::Update() {
 				isPlaying = true;
 				rhythmManager->StartSong(soundHandle_);
 			}
-
+			//4秒になると音楽を停止する
 			if (rhythmManager->GetSongTimer() >= 4.0f) {
 				rhythmManager->StopSong(soundHandle_);
 			}
+			//6秒以上だったらゲームプレイは終わり
 			if (rhythmManager->GetSongTimer() >= 6.0f) {
 				isPlaying = false;
 				isFinished = true;

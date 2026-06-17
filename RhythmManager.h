@@ -31,14 +31,14 @@ private:
 	std::vector<Note> notes_;
 	std::string judgement = "";
 
-	//float kAudioOffset = -0.5f;
+	
 	float songTimer_ = 0.0f;
 	float bpm_ = 120.0f;
 	float beatInterval_ = 0.0f;
 
 	float travelTime_ = 2.0f;
 
-	float startY_ = -100.0f;
+	float startY_ = -100.0f;//ノーツの最初の時点
 	float hitLineY_ = 600.0f;
 
 	int nextSpawnIndex_ = 0;
